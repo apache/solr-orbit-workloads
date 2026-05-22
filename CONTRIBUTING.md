@@ -160,6 +160,13 @@ included in the backport PR.
 
 ## Contributing a workload
 
+For a step-by-step guide to creating a new workload from scratch or migrating one from
+OpenSearch Benchmark, see
+[CREATE_WORKLOAD_GUIDE.md](https://github.com/apache/solr-orbit/blob/main/CREATE_WORKLOAD_GUIDE.md)
+in the `solr-orbit` repository. If you are migrating an existing OSB workload, the
+[converter tool](https://github.com/apache/solr-orbit/blob/main/docs/converter/) can
+automate much of the mechanical translation.
+
 See the [Apache Solr Orbit documentation site](https://apache.github.io/solr-orbit/)
 for the full workload specification reference, including operation types, Jinja2 templating,
 and test procedure format.
