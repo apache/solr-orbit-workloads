@@ -100,7 +100,7 @@ procedures above:
 | Operation | Query | Notes |
 |-----------|-------|-------|
 | `match-all` | `*:*` | Full-collection match |
-| `range` | `total_amount:[5 TO 15]` | Range filter on a float field |
+| `range` | `total_amount:[5 TO 15}` | Range filter on a float field. The upper bound is exclusive, matching the upstream `lt: 15` |
 | `distance_amount_facet` | `trip_distance:[0 TO 50]` + range facet | Range facet on `trip_distance` |
 | `date_histogram_facet` | Date range, `+1DAY` gap | Daily dropoff histogram (first 21 days of Jan 2015) |
 | `date_histogram_calendar_interval` | Date range, `+1MONTH` gap | Monthly histogram, calendar-aligned buckets |
