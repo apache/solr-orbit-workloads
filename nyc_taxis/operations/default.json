@@ -41,7 +41,7 @@
     "body": {
       "query": "*:*",
       "filter": [
-        "trip_distance:[0 TO 50]"
+        "trip_distance:[0 TO 50}"
       ],
       "limit": 0,
       "facet": {
@@ -60,7 +60,7 @@
     "name": "date_histogram_facet",
     "operation-type": "search",
     "body": {
-      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2015-01-21T00:00:00Z]",
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2015-01-22T00:00:00Z}",
       "limit": 0,
       "facet": {
         "dropoffs_over_time": {
@@ -78,7 +78,7 @@
     "name": "date_histogram_calendar_interval",
     "operation-type": "search",
     "body": {
-      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z]",
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z}",
       "limit": 0,
       "facet": {
         "dropoffs_over_time": {
@@ -96,7 +96,7 @@
     "name": "date_histogram_fixed_interval",
     "operation-type": "search",
     "body": {
-      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z]",
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z}",
       "limit": 0,
       "facet": {
         "dropoffs_over_time": {
