@@ -30,8 +30,9 @@ import datetime
 
 # Common helper functions
 def random_money_values(max_value):
-    gte_cents = random.randrange(0, max_value*100)
-    lte_cents = random.randrange(gte_cents, max_value*100)
+    max_cents = round(max_value * 100)
+    gte_cents = random.randrange(0, max_cents)
+    lte_cents = random.randrange(gte_cents, max_cents)
     return {
         "gte":gte_cents/100,
         "lte":lte_cents/100
