@@ -38,7 +38,7 @@ def random_money_values(max_value):
         "lte":lte_cents/100
     }
 
-def random_dates(min_value, max_value, format_string):
+def random_dates(min_value, max_value, format_string, whole_days=False):
     # arguments are datetime objects
     min_timestamp = datetime.datetime.timestamp(min_value)
     max_timestamp = datetime.datetime.timestamp(max_value)
@@ -48,6 +48,9 @@ def random_dates(min_value, max_value, format_string):
 
     gte_date = datetime.datetime.fromtimestamp(min_timestamp + int(gte_fraction * diff))
     lte_date = datetime.datetime.fromtimestamp(min_timestamp + int(lte_fraction * diff))
+    if whole_days:
+        gte_date = gte_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        lte_date = lte_date.replace(hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
     return {
         "gte":gte_date.strftime(format_string),
         "lte":lte_date.strftime(format_string)
@@ -64,7 +67,7 @@ def date_source_with_hours():
     return random_dates(start_date, end_date, format_string="%Y-%m-%dT%H:%M:%SZ")
 
 def date_source_without_hours():
-    return random_dates(start_date, end_date, format_string="%Y-%m-%dT00:00:00Z")
+    return random_dates(start_date, end_date, format_string="%Y-%m-%dT%H:%M:%SZ", whole_days=True)
 
 def trip_distance_source():
     gte = random.randint(0, 10)
