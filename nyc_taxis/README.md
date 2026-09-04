@@ -95,7 +95,12 @@ parameters.
 ## Search operations
 
 The following named operations are defined in `operations/default.json` and used by the test
-procedures above:
+procedures above. In the notes, *upstream* means OpenSearch Benchmark's `nyc_taxis`
+([opensearch-benchmark-workloads](https://github.com/opensearch-project/opensearch-benchmark-workloads/tree/main/nyc_taxis)),
+which these operations were ported from. Elastic's `rally-tracks` carries a workload of the same
+name but with different values in places — `fixed_interval: 10d` and `calendar_interval: week`
+where OpenSearch Benchmark has `60d` and `month` — so the two are not interchangeable as a
+reference.
 
 | Operation | Query | Notes |
 |-----------|-------|-------|
@@ -104,7 +109,7 @@ procedures above:
 | `distance_amount_facet` | `trip_distance:[0 TO 50}` + range facet | Range facet on `trip_distance`. Exclusive upper bound, matching the upstream `lt: 50` |
 | `date_histogram_facet` | Date range, `+1DAY` gap | Daily dropoff histogram, all 21 days of Jan 2015. Upstream bounds this with `lte: 21/01/2015` in `dd/MM/yyyy`, which covers the whole of the 21st, so the filter runs to `2015-01-22T00:00:00Z` exclusive |
 | `date_histogram_calendar_interval` | Date range, `+1MONTH` gap | Monthly histogram, calendar-aligned buckets. Exclusive upper bound, matching the upstream `lt: 2016-01-01` |
-| `date_histogram_fixed_interval` | Date range, `+30DAY` gap | Monthly histogram, fixed-width buckets. Exclusive upper bound, matching the upstream `lt: 2016-01-01` |
+| `date_histogram_fixed_interval` | Date range, `+60DAY` gap | Fixed-width buckets, 60 days each, matching the upstream `fixed_interval: 60d`. OpenSearch anchors a fixed interval on the epoch rather than on the query, so the facet starts at `2014-11-06T00:00:00Z` — the last 60-day boundary at or before the corpus — which puts the bucket edges on the same instants. Exclusive upper bound, matching the upstream `lt: 2016-01-01` |
 | `desc_sort_tip_amount` | `*:*` sort `tip_amount desc` | Descending sort |
 | `asc_sort_tip_amount` | `*:*` sort `tip_amount asc` | Ascending sort |
 | `desc_sort_passenger_count` | `*:*` sort `passenger_count desc` | Descending sort |
