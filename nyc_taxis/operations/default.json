@@ -102,9 +102,9 @@
         "dropoffs_over_time": {
           "type": "range",
           "field": "dropoff_datetime",
-          "gap": "+30DAY",
+          "gap": "+60DAY",
           "mincount": 1,
-          "start": "2015-01-01T00:00:00Z",
+          "start": "2014-11-06T00:00:00Z",
           "end": "2016-01-01T00:00:00Z"
         }
       }
