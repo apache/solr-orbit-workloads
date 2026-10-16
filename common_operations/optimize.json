@@ -1,7 +1,6 @@
 {
   "operation": {
-    "operation-type": "optimize",
-    "max-segments": {{ max_segments | default(1) }},
-    "timeout": {{ optimize_timeout | default(600) }}
+    "operation-type": "optimize"{% if max_segments is defined %},
+    "max-segments": {{ max_segments }}{% endif %}
   }
 }
