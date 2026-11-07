@@ -104,7 +104,7 @@ procedures above:
 | `distance_amount_facet` | `trip_distance:[0 TO 50}` + range facet | Range facet on `trip_distance`. Exclusive upper bound, matching the upstream `lt: 50` |
 | `date_histogram_facet` | Date range, `+1DAY` gap | Daily dropoff histogram, all 21 days of Jan 2015. Upstream bounds this with `lte: 21/01/2015` in `dd/MM/yyyy`, which covers the whole of the 21st, so the filter runs to `2015-01-22T00:00:00Z` exclusive |
 | `date_histogram_calendar_interval` | Date range, `+1MONTH` gap | Monthly histogram, calendar-aligned buckets. Exclusive upper bound, matching the upstream `lt: 2016-01-01` |
-| `date_histogram_fixed_interval` | Date range, `+30DAY` gap | Monthly histogram, fixed-width buckets. Exclusive upper bound, matching the upstream `lt: 2016-01-01` |
+| `date_histogram_fixed_interval` | Date range, `+60DAY` gap | Fixed-width buckets, 60 days each. Fixed intervals are anchored on the epoch, so the facet starts at `2014-11-06T00:00:00Z`, the last 60-day boundary at or before the corpus. Exclusive upper bound, matching the upstream `lt: 2016-01-01` |
 | `desc_sort_tip_amount` | `*:*` sort `tip_amount desc` | Descending sort |
 | `asc_sort_tip_amount` | `*:*` sort `tip_amount asc` | Ascending sort |
 | `desc_sort_passenger_count` | `*:*` sort `passenger_count desc` | Descending sort |
