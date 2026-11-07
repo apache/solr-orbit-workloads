@@ -57,17 +57,22 @@ def random_dates(min_value, max_value, format_string, whole_days=False):
     }
 
 # Standard value sources for our operations
+# Each date source draws from the window its operation facets over, so randomized
+# queries stay inside the facet range set in operations/default.json.
 start_date = datetime.datetime(2015, 1, 1)
-end_date = datetime.datetime(2015, 1, 15)
+# date_histogram_calendar_interval and date_histogram_fixed_interval facet over all of 2015.
+corpus_end_date = datetime.datetime(2016, 1, 1)
+# date_histogram_facet facets over 2015-01-01 to 2015-01-22 (exclusive), i.e. the days 1 to 21.
+daily_histogram_end_date = datetime.datetime(2015, 1, 22)
 
 def total_amount_source():
     return random_money_values(111.98)
 
 def date_source_with_hours():
-    return random_dates(start_date, end_date, format_string="%Y-%m-%dT%H:%M:%SZ")
+    return random_dates(start_date, corpus_end_date, format_string="%Y-%m-%dT%H:%M:%SZ")
 
 def date_source_without_hours():
-    return random_dates(start_date, end_date, format_string="%Y-%m-%dT%H:%M:%SZ", whole_days=True)
+    return random_dates(start_date, daily_histogram_end_date, format_string="%Y-%m-%dT%H:%M:%SZ", whole_days=True)
 
 def trip_distance_source():
     gte = random.randint(0, 10)
