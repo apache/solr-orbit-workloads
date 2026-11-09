@@ -38,8 +38,9 @@ class QueryParamSource:
         cwd = os.path.dirname(__file__)
         # The terms.txt file has been generated with:
         # sed -n '13~250p' /path/to/geonames/documents.json | shuf | sed -e "s/.*name\": \"//;s/\",.*$//" > terms.txt
-        with open(os.path.join(cwd, "terms.txt"), "r") as ins:
-            self.terms = [line.strip() for line in ins.readlines()]
+        # Lines starting with "#" (the licence header) and blank lines are not terms.
+        with open(os.path.join(cwd, "terms.txt"), "r", encoding="utf-8") as ins:
+            self.terms = [term for term in (line.strip() for line in ins) if term and not term.startswith("#")]
 
     # We need to stick to the param source API
     # noinspection PyUnusedLocal
