@@ -29,6 +29,12 @@ import random
 import os
 
 
+# Some geonames place names contain a comma ("Schenkon, Tannberg"). {!terms} splits strictly on
+# its separator, which defaults to ",", so join on a character that never occurs in terms.txt.
+TERMS_SEPARATOR = "|"
+TERMS_QUERY_PREFIX = '{!terms f=name_raw separator="' + TERMS_SEPARATOR + '"}'
+
+
 class QueryParamSource:
     # We need to stick to the param source API
     # noinspection PyUnusedLocal
@@ -54,7 +60,7 @@ class PureTermsQueryParamSource(QueryParamSource):
         result = {
             "collection": "geonames",
             "body": {
-                "query": "{!terms f=name_raw}" + ",".join(query_terms)
+                "query": TERMS_QUERY_PREFIX + TERMS_SEPARATOR.join(query_terms)
             }
         }
         if "cache" in self._params:
@@ -71,7 +77,7 @@ class FilteredTermsQueryParamSource(QueryParamSource):
             "collection": "geonames",
             "body": {
                 "query": "feature_class_raw:T",
-                "filter": "{!terms f=name_raw}" + ",".join(query_terms)
+                "filter": TERMS_QUERY_PREFIX + TERMS_SEPARATOR.join(query_terms)
             }
         }
         if "cache" in self._params:
@@ -90,7 +96,7 @@ class ProhibitedTermsQueryParamSource(QueryParamSource):
                 "query": {
                     "bool": {
                         "must": "feature_class_raw:A",
-                        "must_not": "{!terms f=name_raw}" + ",".join(query_terms)
+                        "must_not": TERMS_QUERY_PREFIX + TERMS_SEPARATOR.join(query_terms)
                     }
                 }
             }
