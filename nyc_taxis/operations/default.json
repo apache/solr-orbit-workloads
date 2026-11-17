@@ -141,4 +141,146 @@
       "query": "*:*",
       "sort": "passenger_count asc"
     }
+  },
+{
+    "name": "trip_query_a_boolean",
+    "description": "Boolean match only",
+    "operation-type": "search",
+    "body": {
+      "query": "{!lucene v=$trip_query}",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))"
+      }
+    }
+  },
+  {
+    "name": "trip_query_b_boosts",
+    "description": "A + function boosts",
+    "operation-type": "search",
+    "body": {
+      "query": "+{!lucene v=$trip_query} {!func v=$boost_scores}",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))",
+        "boost_scores": "sum(def(query({!v=\"tip_amount:[5 TO *]^=10.0\"}),0),def(query({!v=\"payment_type:1^=50.0\"}),0))"
+      }
+    }
+  },
+  {
+    "name": "trip_query_c_filters",
+    "description": "B + filters",
+    "operation-type": "search",
+    "body": {
+      "query": "+{!lucene v=$trip_query} {!func v=$boost_scores}",
+      "filter": [
+        "fare_amount:[0.01 TO *]",
+        "(trip_type:\"1\" AND pickup_datetime:[2015-01-01T00:00:00Z TO 2015-02-01T00:00:00Z})"
+      ],
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))",
+        "boost_scores": "sum(def(query({!v=\"tip_amount:[5 TO *]^=10.0\"}),0),def(query({!v=\"payment_type:1^=50.0\"}),0))"
+      }
+    }
+  },
+  {
+    "name": "trip_query_d_sort",
+    "description": "C + sort",
+    "operation-type": "search",
+    "body": {
+      "query": "+{!lucene v=$trip_query} {!func v=$boost_scores}",
+      "filter": [
+        "fare_amount:[0.01 TO *]",
+        "(trip_type:\"1\" AND pickup_datetime:[2015-01-01T00:00:00Z TO 2015-02-01T00:00:00Z})"
+      ],
+      "sort": "payment_type asc,score desc,tip_amount desc",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))",
+        "boost_scores": "sum(def(query({!v=\"tip_amount:[5 TO *]^=10.0\"}),0),def(query({!v=\"payment_type:1^=50.0\"}),0))"
+      }
+    }
+  },
+  {
+    "name": "trip_query_e_collapse",
+    "description": "D + collapse on passenger_count",
+    "operation-type": "search",
+    "body": {
+      "query": "+{!lucene v=$trip_query} {!func v=$boost_scores}",
+      "filter": [
+        "fare_amount:[0.01 TO *]",
+        "(trip_type:\"1\" AND pickup_datetime:[2015-01-01T00:00:00Z TO 2015-02-01T00:00:00Z})",
+        "{!tag=fc}{!collapse field=passenger_count sort=$sort nullPolicy=collapse}"
+      ],
+      "sort": "payment_type asc,score desc,tip_amount desc",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))",
+        "boost_scores": "sum(def(query({!v=\"tip_amount:[5 TO *]^=10.0\"}),0),def(query({!v=\"payment_type:1^=50.0\"}),0))"
+      }
+    }
+  },
+  {
+    "name": "trip_query_f_expand",
+    "description": "E + expand (100 rows per group)",
+    "operation-type": "search",
+    "body": {
+      "query": "+{!lucene v=$trip_query} {!func v=$boost_scores}",
+      "filter": [
+        "fare_amount:[0.01 TO *]",
+        "(trip_type:\"1\" AND pickup_datetime:[2015-01-01T00:00:00Z TO 2015-02-01T00:00:00Z})",
+        "{!tag=fc}{!collapse field=passenger_count sort=$sort nullPolicy=collapse}"
+      ],
+      "sort": "payment_type asc,score desc,tip_amount desc",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))",
+        "boost_scores": "sum(def(query({!v=\"tip_amount:[5 TO *]^=10.0\"}),0),def(query({!v=\"payment_type:1^=50.0\"}),0))",
+        "expand": true,
+        "expand.field": "passenger_count",
+        "expand.rows": 100
+      }
+    }
+  },
+  {
+    "name": "trip_query_g_full",
+    "description": "F + payment type and rate code facets (full query)",
+    "operation-type": "search",
+    "body": {
+      "query": "+{!lucene v=$trip_query} {!func v=$boost_scores}",
+      "filter": [
+        "fare_amount:[0.01 TO *]",
+        "(trip_type:\"1\" AND pickup_datetime:[2015-01-01T00:00:00Z TO 2015-02-01T00:00:00Z})",
+        "{!tag=fc}{!collapse field=passenger_count sort=$sort nullPolicy=collapse}"
+      ],
+      "sort": "payment_type asc,score desc,tip_amount desc",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))",
+        "boost_scores": "sum(def(query({!v=\"tip_amount:[5 TO *]^=10.0\"}),0),def(query({!v=\"payment_type:1^=50.0\"}),0))",
+        "expand": true,
+        "expand.field": "passenger_count",
+        "expand.rows": 100
+      },
+      "facet": {
+        "payment_facets": {
+          "type": "terms",
+          "field": "payment_type",
+          "limit": 50,
+          "mincount": 1,
+          "domain": { "excludeTags": "fc" }
+        },
+        "rate_code_facets": {
+          "type": "terms",
+          "field": "rate_code_id",
+          "limit": 50,
+          "mincount": 1,
+          "domain": { "excludeTags": "fc" }
+        }
+      }
+    }
   }
+
+
+  

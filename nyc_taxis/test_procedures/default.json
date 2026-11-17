@@ -79,6 +79,55 @@
           "iterations": {{ asc_sort_passenger_count_iterations or iterations | default(100) | tojson }},
           "target-throughput": {{ asc_sort_passenger_count_target_throughput or target_throughput | default(2) | tojson }},
           "clients": {{ asc_sort_passenger_count_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_a_boolean",
+          "warmup-iterations": {{ trip_query_a_boolean_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_a_boolean_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_a_boolean_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_a_boolean_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_b_boosts",
+          "warmup-iterations": {{ trip_query_b_boosts_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_b_boosts_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_b_boosts_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_b_boosts_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_c_filters",
+          "warmup-iterations": {{ trip_query_c_filters_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_c_filters_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_c_filters_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_c_filters_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_d_sort",
+          "warmup-iterations": {{ trip_query_d_sort_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_d_sort_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_d_sort_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_d_sort_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_e_collapse",
+          "warmup-iterations": {{ trip_query_e_collapse_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_e_collapse_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_e_collapse_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_e_collapse_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_f_expand",
+          "warmup-iterations": {{ trip_query_f_expand_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_f_expand_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_f_expand_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_f_expand_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_g_full",
+          "warmup-iterations": {{ trip_query_g_full_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_g_full_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_g_full_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_g_full_search_clients or search_clients | default(1) }}
         }
       ]
     },
