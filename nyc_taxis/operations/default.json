@@ -93,6 +93,27 @@
     }
   },
   {
+    "name": "date_histogram_calendar_interval_with_tz",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z}",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+1MONTH",
+          "mincount": 1,
+          "start": "2015-01-01T00:00:00Z/MONTH",
+          "end": "2016-01-01T00:00:00Z/MONTH+1MONTH"
+        }
+      },
+      "params": {
+        "TZ": "America/New_York"
+      }
+    }
+  },
+  {
     "name": "date_histogram_fixed_interval",
     "operation-type": "search",
     "body": {
@@ -106,6 +127,106 @@
           "mincount": 1,
           "start": "2014-11-06T00:00:00Z",
           "end": "2016-01-01T00:00:00Z"
+        }
+      }
+    }
+  },
+  {
+    "name": "date_histogram_fixed_interval_with_tz",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z}",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "mincount": 1,
+          "ranges": [
+            {
+              "from": "2014-11-06T05:00:00Z",
+              "to": "2015-01-05T05:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-01-05T05:00:00Z",
+              "to": "2015-03-06T05:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-03-06T05:00:00Z",
+              "to": "2015-05-05T04:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-05-05T04:00:00Z",
+              "to": "2015-07-04T04:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-07-04T04:00:00Z",
+              "to": "2015-09-02T04:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-09-02T04:00:00Z",
+              "to": "2015-11-01T04:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-11-01T04:00:00Z",
+              "to": "2015-12-31T05:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            },
+            {
+              "from": "2015-12-31T05:00:00Z",
+              "to": "2016-02-29T05:00:00Z",
+              "inclusive_from": true,
+              "inclusive_to": false
+            }
+          ]
+        }
+      },
+      "params": {
+        "TZ": "America/New_York"
+      }
+    }
+  },
+  {
+    "name": "date_histogram_fixed_interval_with_metrics",
+    "operation-type": "search",
+    "body": {
+      "query": "dropoff_datetime:[2015-01-01T00:00:00Z TO 2016-01-01T00:00:00Z}",
+      "limit": 0,
+      "facet": {
+        "dropoffs_over_time": {
+          "type": "range",
+          "field": "dropoff_datetime",
+          "gap": "+60DAY",
+          "mincount": 1,
+          "start": "2014-11-06T00:00:00Z",
+          "end": "2016-01-01T00:00:00Z",
+          "facet": {
+            "total_amount_min": "min(total_amount)",
+            "total_amount_max": "max(total_amount)",
+            "total_amount_sum": "sum(total_amount)",
+            "total_amount_avg": "avg(total_amount)",
+            "tip_amount_min": "min(tip_amount)",
+            "tip_amount_max": "max(tip_amount)",
+            "tip_amount_sum": "sum(tip_amount)",
+            "tip_amount_avg": "avg(tip_amount)",
+            "trip_distance_min": "min(trip_distance)",
+            "trip_distance_max": "max(trip_distance)",
+            "trip_distance_sum": "sum(trip_distance)",
+            "trip_distance_avg": "avg(trip_distance)"
+          }
         }
       }
     }
