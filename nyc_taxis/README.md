@@ -71,10 +71,10 @@ solr-orbit run \
   --target-host=localhost:8983 \
   --workload=nyc_taxis
 
-# Provision Solr 9 via Docker and benchmark
+# Provision Solr 10 via Docker and benchmark
 solr-orbit run \
   --pipeline=docker \
-  --distribution-version=9.10.1 \
+  --distribution-version=10.1.0 \
   --workload=nyc_taxis
 ```
 
