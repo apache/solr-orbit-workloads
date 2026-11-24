@@ -86,4 +86,7 @@ def register(registry):
     registry.register_standard_value_source("distance_amount_facet", "trip_distance", trip_distance_source)
     registry.register_standard_value_source("date_histogram_facet", "dropoff_datetime", date_source_without_hours)
     registry.register_standard_value_source("date_histogram_calendar_interval", "dropoff_datetime", date_source_with_hours)
+    registry.register_standard_value_source("date_histogram_calendar_interval_with_tz", "dropoff_datetime", date_source_with_hours)
     registry.register_standard_value_source("date_histogram_fixed_interval", "dropoff_datetime", date_source_with_hours)
+    registry.register_standard_value_source("date_histogram_fixed_interval_with_tz", "dropoff_datetime", date_source_with_hours)
+    registry.register_standard_value_source("date_histogram_fixed_interval_with_metrics", "dropoff_datetime", date_source_with_hours)
