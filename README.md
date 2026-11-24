@@ -30,7 +30,7 @@ solr-orbit run \
 # Or provision Solr via Docker and benchmark
 solr-orbit run \
   --pipeline=docker \
-  --distribution-version=9.10.1 \
+  --distribution-version=10.1.0 \
   --workload=nyc_taxis \
   --test-mode
 ```
