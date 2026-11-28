@@ -71,6 +71,20 @@
     }
   },
   {
+    "name": "decay_geo_gauss_function_score",
+    "operation-type": "search",
+    "body": {
+      "query": "{!func}exp(div(product(-1,pow(geodist(location,52.37,4.8951),2)),108573.62047581296))"
+    }
+  },
+  {
+    "name": "field_value_function_score",
+    "operation-type": "search",
+    "body": {
+      "query": "{!func}log(sum(product(population,1.2),2))"
+    }
+  },
+  {
     "name": "large_terms",
     "operation-type": "search",
     "param-source": "pure-terms-query-source"

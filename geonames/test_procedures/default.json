@@ -40,6 +40,20 @@
           "clients": {{ country_facet_cached_search_clients or search_clients | default(1) }}
         },
         {
+          "operation": "decay_geo_gauss_function_score",
+          "warmup-iterations": {{ decay_geo_gauss_function_score_warmup_iterations or warmup_iterations | default(200) | tojson }},
+          "iterations": {{ decay_geo_gauss_function_score_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ decay_geo_gauss_function_score_target_throughput or target_throughput | default(1) | tojson }},
+          "clients": {{ decay_geo_gauss_function_score_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "field_value_function_score",
+          "warmup-iterations": {{ field_value_function_score_warmup_iterations or warmup_iterations | default(200) | tojson }},
+          "iterations": {{ field_value_function_score_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ field_value_function_score_target_throughput or target_throughput | default(1.5) | tojson }},
+          "clients": {{ field_value_function_score_search_clients or search_clients | default(1) }}
+        },
+        {
           "operation": "large_terms",
           "warmup-iterations": {{ large_terms_warmup_iterations or warmup_iterations | default(200) | tojson }},
           "iterations": {{ large_terms_iterations or iterations | default(100) | tojson }},
