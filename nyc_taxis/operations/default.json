@@ -262,4 +262,16 @@
       "query": "*:*",
       "sort": "passenger_count asc"
     }
+  },
+  {
+    "name": "trip_query_boolean",
+    "description": "Boolean match only",
+    "operation-type": "search",
+    "body": {
+      "query": "{!lucene v=$trip_query}",
+      "limit": 36,
+      "params": {
+        "trip_query": "({!geofilt sfield=pickup_location pt=40.758,-73.9855 d=1}^200.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=3}^100.0 OR {!geofilt sfield=pickup_location pt=40.758,-73.9855 d=5}^50.0) OR ({!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=1}^180.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=3}^90.0 OR {!geofilt sfield=dropoff_location pt=40.6413,-73.7781 d=5}^45.0) OR (rate_code_id:(\"2\"^160.0 OR \"3\"^80.0)) OR (trip_distance:([10 TO *]^20.0 OR [5 TO 10}^10.0))"
+      }
+    } 
   }

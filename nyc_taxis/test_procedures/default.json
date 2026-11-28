@@ -79,6 +79,13 @@
           "iterations": {{ asc_sort_passenger_count_iterations or iterations | default(100) | tojson }},
           "target-throughput": {{ asc_sort_passenger_count_target_throughput or target_throughput | default(2) | tojson }},
           "clients": {{ asc_sort_passenger_count_search_clients or search_clients | default(1) }}
+        },
+        {
+          "operation": "trip_query_boolean",
+          "warmup-iterations": {{ trip_query_boolean_warmup_iterations or warmup_iterations | default(50) | tojson }},
+          "iterations": {{ trip_query_boolean_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ trip_query_boolean_target_throughput or target_throughput | default(2) | tojson }},
+          "clients": {{ trip_query_boolean_search_clients or search_clients | default(1) }}
         }
       ]
     },

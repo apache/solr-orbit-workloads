@@ -112,6 +112,7 @@ procedures above:
 | `asc_sort_tip_amount` | `*:*` sort `tip_amount asc` | Ascending sort |
 | `desc_sort_passenger_count` | `*:*` sort `passenger_count desc` | Descending sort |
 | `asc_sort_passenger_count` | `*:*` sort `passenger_count asc` | Ascending sort |
+| `trip_query_boolean` | Boolean OR of geo rings (Times Square pickup, JFK dropoff), rate codes and trip distance tiers, each with a boost | Boolean match; query text passed as a `trip_query` param via `{!lucene v=$trip_query}` |
 
 ## Parameters
 
