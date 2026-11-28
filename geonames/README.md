@@ -41,6 +41,12 @@ Modifications from the original data:
 * `append-no-conflicts` (default): Indexes the whole corpus with unique document IDs, then runs a suite of search and faceting queries.
 * `append-no-conflicts-index-only`: Indexes the whole corpus with unique document IDs, no queries.
 
+### Keyset operations
+
+`asc_sort_with_after_population` (after population 1,000,000), `desc_sort_with_after_geonameid` and `asc_sort_with_after_geonameid` (after geonameid 5,000,000) fetch the page that follows a given sort value, with a `cursorMark` set in the request.
+
+A cursor mark is the Base64 of the JavaBin encoding of one value per sort clause, in order: here the value to start after, and an `id` that excludes documents equal to it (`"~"`, above every id, for `id asc`; the empty string for `id desc`). Solr requires the uniqueKey `id` in the sort when a cursor is used, so these operations sort by it as a second key. A new starting point needs a new mark.
+
 ### Parameters
 
 This workload allows the following parameters via `--workload-params`:

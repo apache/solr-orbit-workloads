@@ -102,6 +102,17 @@
     }
   },
   {
+    "name": "asc_sort_with_after_population",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "population asc,id asc",
+      "params": {
+        "cursorMark": "AoJwpOgDIX4="
+      }
+    }
+  },
+  {
     "name": "desc_sort_geonameid",
     "operation-type": "search",
     "body": {
@@ -110,11 +121,33 @@
     }
   },
   {
+    "name": "desc_sort_with_after_geonameid",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "geonameid desc,id desc",
+      "params": {
+        "cursorMark": "AoJwtIkTIA=="
+      }
+    }
+  },
+  {
     "name": "asc_sort_geonameid",
     "operation-type": "search",
     "body": {
       "query": "*:*",
       "sort": "geonameid asc"
+    }
+  },
+  {
+    "name": "asc_sort_with_after_geonameid",
+    "operation-type": "search",
+    "body": {
+      "query": "*:*",
+      "sort": "geonameid asc,id asc",
+      "params": {
+        "cursorMark": "AoJwtIkTIX4="
+      }
     }
   },
   {
