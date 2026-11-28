@@ -71,6 +71,16 @@
     }
   },
   {
+    "name": "scroll",
+    "operation-type": "paginated-search",
+    "collection": "geonames",
+    "q": "*:*",
+    "pages": 25,
+    "results-per-page": 1000,
+    "sort": "id asc",
+    "fl": "id"
+  },
+  {
     "name": "decay_geo_gauss_function_score",
     "operation-type": "search",
     "body": {
