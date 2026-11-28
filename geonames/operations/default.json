@@ -36,6 +36,13 @@
     }
   },
   {
+    "name": "expression",
+    "operation-type": "search",
+    "body": {
+      "query": "{!func}geo_expression(population,lon,lat)"
+    }
+  },
+  {
     "name": "country_facet_uncached",
     "operation-type": "search",
     "body": {

@@ -26,6 +26,13 @@
           "clients": {{ phrase_search_clients or search_clients | default(1) }}
         },
         {
+          "operation": "expression",
+          "warmup-iterations": {{ expression_warmup_iterations or warmup_iterations | default(200) | tojson }},
+          "iterations": {{ expression_iterations or iterations | default(100) | tojson }},
+          "target-throughput": {{ expression_target_throughput or target_throughput | default(1.5) | tojson }},
+          "clients": {{ expression_search_clients or search_clients | default(1) }}
+        },
+        {
           "operation": "country_facet_uncached",
           "warmup-iterations": {{ country_facet_uncached_warmup_iterations or warmup_iterations | default(200) | tojson }},
           "iterations": {{ country_facet_uncached_iterations or iterations | default(100) | tojson }},

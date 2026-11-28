@@ -41,6 +41,12 @@ Modifications from the original data:
 * `append-no-conflicts` (default): Indexes the whole corpus with unique document IDs, then runs a suite of search and faceting queries.
 * `append-no-conflicts-index-only`: Indexes the whole corpus with unique document IDs, no queries.
 
+### Expression operation
+
+`expression` orders all documents by `abs(ln(abs(population) + 1) + lon + lat)`, a Lucene expression evaluated for every document. The expression is registered as the function `geo_expression` in the collection's `solrconfig.xml` and called with `population`, `lon` and `lat`. `lat` and `lon` are fields of their own in the schema (doc values only); they are filled from `location` when a document is indexed, by the update processor chain `geo-split` in the same file, so the corpus is unchanged.
+
+Because they belong to the collection's configuration, the two fields and the chain apply to every operation of this workload, not only to this one.
+
 ### Parameters
 
 This workload allows the following parameters via `--workload-params`:
