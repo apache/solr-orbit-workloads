@@ -75,4 +75,18 @@
       <str name="echoParams">all</str>
     </lst>
   </requestHandler>
+  <!-- lat and lon are derived from location when a document is indexed, for the expression function below -->
+  <updateRequestProcessorChain name="geo-split" default="true">
+    <processor class="solr.CloneFieldUpdateProcessorFactory"><str name="source">location</str><str name="dest">lat</str></processor>
+    <processor class="solr.CloneFieldUpdateProcessorFactory"><str name="source">location</str><str name="dest">lon</str></processor>
+    <processor class="solr.RegexReplaceProcessorFactory"><str name="fieldName">lat</str><str name="pattern">,.*$</str><str name="replacement"></str></processor>
+    <processor class="solr.RegexReplaceProcessorFactory"><str name="fieldName">lon</str><str name="pattern">^[^,]*,</str><str name="replacement"></str></processor>
+    <processor class="solr.ParseDoubleFieldUpdateProcessorFactory"><str name="fieldName">lat</str><str name="fieldName">lon</str></processor>
+    <processor class="solr.LogUpdateProcessorFactory" />
+    <processor class="solr.DistributedUpdateProcessorFactory" />
+    <processor class="solr.RunUpdateProcessorFactory" />
+  </updateRequestProcessorChain>
+  <valueSourceParser name="geo_expression" class="solr.ExpressionValueSourceParser">
+    <str name="expression">abs(ln(abs($1) + 1) + $2 + $3)</str>
+  </valueSourceParser>
 </config>

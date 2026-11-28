@@ -94,6 +94,8 @@
   <field name="asciiname" type="text_general" indexed="true" stored="true" />
   <field name="asciiname_raw" type="string" indexed="true" stored="true" docValues="true" />
   <field name="population" type="plong" indexed="true" stored="true" />
+  <field name="lat" type="pdouble" indexed="false" stored="false" docValues="true" />
+  <field name="lon" type="pdouble" indexed="false" stored="false" docValues="true" />
 
   <!-- Unique Key -->
   <uniqueKey>id</uniqueKey>
