@@ -46,6 +46,12 @@ Modifications from the original data:
 * `field_value_function_score`: ranks every document by `log10(population * 1.2 + 2)`, written as the function query `log(sum(product(population,1.2),2))`; Solr's `log` is the base-10 logarithm.
 * `decay_geo_gauss_function_score`: ranks every document by a gaussian decay of its distance from `52.37,4.8951`, with a scale of 500 km, no offset and a decay of 0.1 at the scale. The score is `exp(-d^2 / (2*sigma^2))`, where `d` is `geodist(location, ...)` in kilometres and `2*sigma^2 = -scale^2 / ln(decay) = 108573.62` km^2, which is the constant in the query. Solr has no built-in decay function, so the curve is composed from `exp`, `pow` and `div`.
 
+### Keyset operations
+
+`asc_sort_with_after_population` (after population 1,000,000), `desc_sort_with_after_geonameid` and `asc_sort_with_after_geonameid` (after geonameid 5,000,000) fetch the page that follows a given sort value, with a `cursorMark` set in the request.
+
+A cursor mark is the Base64 of the JavaBin encoding of one value per sort clause, in order: here the value to start after, and an `id` that excludes documents equal to it (`"~"`, above every id, for `id asc`; the empty string for `id desc`). Solr requires the uniqueKey `id` in the sort when a cursor is used, so these operations sort by it as a second key. A new starting point needs a new mark.
+
 ### Parameters
 
 This workload allows the following parameters via `--workload-params`:
