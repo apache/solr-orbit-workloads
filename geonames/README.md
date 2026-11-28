@@ -46,6 +46,12 @@ Modifications from the original data:
 * `field_value_function_score`: ranks every document by `log10(population * 1.2 + 2)`, written as the function query `log(sum(product(population,1.2),2))`; Solr's `log` is the base-10 logarithm.
 * `decay_geo_gauss_function_score`: ranks every document by a gaussian decay of its distance from `52.37,4.8951`, with a scale of 500 km, no offset and a decay of 0.1 at the scale. The score is `exp(-d^2 / (2*sigma^2))`, where `d` is `geodist(location, ...)` in kilometres and `2*sigma^2 = -scale^2 / ln(decay) = 108573.62` km^2, which is the constant in the query. Solr has no built-in decay function, so the curve is composed from `exp`, `pow` and `div`.
 
+### Significant terms operations
+
+`significant_text_selective` (documents whose `alternatenames` contain `street`) and `significant_text_unselective` (documents whose `timezone` contains `America`) list the ten terms of `alternatenames` that are most characteristic of the matching documents. They use a terms facet sorted by `relatedness()`, with the matching documents as the foreground and the whole collection as the background, and only terms that occur in at least three documents.
+
+The score is the `relatedness()` value; the text of the documents is not analysed again at query time, the facet reads the indexed terms.
+
 ### Parameters
 
 This workload allows the following parameters via `--workload-params`:

@@ -145,4 +145,52 @@
         }
       }
     }
+  },
+  {
+    "name": "significant_text_selective",
+    "operation-type": "search",
+    "body": {
+      "query": "alternatenames:street",
+      "limit": 0,
+      "params": {
+        "fore": "alternatenames:street",
+        "back": "*:*"
+      },
+      "facet": {
+        "significant_terms": {
+          "type": "terms",
+          "field": "alternatenames",
+          "limit": 10,
+          "mincount": 3,
+          "sort": "relatedness desc",
+          "facet": {
+            "relatedness": "relatedness($fore,$back)"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "significant_text_unselective",
+    "operation-type": "search",
+    "body": {
+      "query": "timezone:America",
+      "limit": 0,
+      "params": {
+        "fore": "timezone:America",
+        "back": "*:*"
+      },
+      "facet": {
+        "significant_terms": {
+          "type": "terms",
+          "field": "alternatenames",
+          "limit": 10,
+          "mincount": 3,
+          "sort": "relatedness desc",
+          "facet": {
+            "relatedness": "relatedness($fore,$back)"
+          }
+        }
+      }
+    }
   }
