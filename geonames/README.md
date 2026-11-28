@@ -41,6 +41,12 @@ Modifications from the original data:
 * `append-no-conflicts` (default): Indexes the whole corpus with unique document IDs, then runs a suite of search and faceting queries.
 * `append-no-conflicts-index-only`: Indexes the whole corpus with unique document IDs, no queries.
 
+### Significant terms operations
+
+`significant_text_selective` (documents whose `alternatenames` contain `street`) and `significant_text_unselective` (documents whose `timezone` contains `America`) list the ten terms of `alternatenames` that are most characteristic of the matching documents. They use a terms facet sorted by `relatedness()`, with the matching documents as the foreground and the whole collection as the background, and only terms that occur in at least three documents.
+
+The score is the `relatedness()` value; the text of the documents is not analysed again at query time, the facet reads the indexed terms.
+
 ### Parameters
 
 This workload allows the following parameters via `--workload-params`:
