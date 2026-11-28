@@ -71,6 +71,16 @@
     }
   },
   {
+    "name": "scroll",
+    "operation-type": "paginated-search",
+    "collection": "geonames",
+    "q": "*:*",
+    "pages": 25,
+    "results-per-page": 1000,
+    "sort": "id asc",
+    "fl": "id"
+  },
+  {
     "name": "large_terms",
     "operation-type": "search",
     "param-source": "pure-terms-query-source"
